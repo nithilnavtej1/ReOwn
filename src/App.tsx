@@ -1,79 +1,99 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "@/context/ThemeContext";
-import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import Home from "./pages/Home";
-import Reels from "./pages/Reels";
-import Sell from "./pages/Sell";
-import Messages from "./pages/Messages";
-import Profile from "./pages/Profile";
-import Chat from "./pages/Chat";
-import CreateAccount from "./pages/CreateAccount";
-import Categories from "./pages/Categories";
-import Notifications from "./pages/Notifications";
-import Settings from "./pages/Settings";
-import ReelComments from "./pages/ReelComments";
-import ShareSheet from "./pages/ShareSheet";
-import ProductDetail from "./pages/ProductDetail";
-import Search from "./pages/Search";
-import SellerProfile from "./pages/SellerProfile";
-import MyListings from "./pages/MyListings";
-import Favorites from "./pages/Favorites";
-import Reviews from "./pages/Reviews";
-import PrivacySecurity from "./pages/PrivacySecurity";
-import Location from "./pages/Location";
-import CategoryProducts from "./pages/CategoryProducts";
-import AdminReels from "./pages/AdminReels";
-import NotFound from "./pages/NotFound";
-import Saved from "./pages/Saved";
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {StatusBar, StyleSheet} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-const queryClient = new QueryClient();
+// Import screens
+import Index from './screens/Index';
+import Auth from './screens/Auth';
+import CreateAccount from './screens/CreateAccount';
+import Home from './screens/Home';
+import Reels from './screens/Reels';
+import Sell from './screens/Sell';
+import Messages from './screens/Messages';
+import Profile from './screens/Profile';
+import Chat from './screens/Chat';
+import Categories from './screens/Categories';
+import Notifications from './screens/Notifications';
+import Settings from './screens/Settings';
+import ProductDetail from './screens/ProductDetail';
+import Search from './screens/Search';
+import SellerProfile from './screens/SellerProfile';
+import MyListings from './screens/MyListings';
+import Favorites from './screens/Favorites';
+import Reviews from './screens/Reviews';
+import PrivacySecurity from './screens/PrivacySecurity';
+import Location from './screens/Location';
+import CategoryProducts from './screens/CategoryProducts';
+import Saved from './screens/Saved';
+import ShareSheet from './screens/ShareSheet';
+import ReelComments from './screens/ReelComments';
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/reels" element={<Reels />} />
-          <Route path="/sell" element={<Sell />} />
-          <Route path="/messages" element={<Messages />} />
-          <Route path="/chat/:id" element={<Chat />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/reel/:id/comments" element={<ReelComments />} />
-          <Route path="/share" element={<ShareSheet />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/profile/:username" element={<SellerProfile />} />
-          <Route path="/my-listings" element={<MyListings />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/privacy-security" element={<PrivacySecurity />} />
-          <Route path="/location" element={<Location />} />
-          <Route path="/category/:category" element={<CategoryProducts />} />
-          <Route path="/admin/reels" element={<AdminReels />} />
-          <Route path="/seller/:username" element={<SellerProfile />} />
-          <Route path="/saved" element={<Saved />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+const Stack = createStackNavigator();
+
+const App = () => {
+  return (
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+          <Stack.Navigator
+            initialRouteName="Index"
+            screenOptions={{
+              headerShown: false,
+              gestureEnabled: true,
+              cardStyleInterpolator: ({current, layouts}) => {
+                return {
+                  cardStyle: {
+                    transform: [
+                      {
+                        translateX: current.progress.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [layouts.screen.width, 0],
+                        }),
+                      },
+                    ],
+                  },
+                };
+              },
+            }}>
+            <Stack.Screen name="Index" component={Index} />
+            <Stack.Screen name="Auth" component={Auth} />
+            <Stack.Screen name="CreateAccount" component={CreateAccount} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Reels" component={Reels} />
+            <Stack.Screen name="Sell" component={Sell} />
+            <Stack.Screen name="Messages" component={Messages} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Chat" component={Chat} />
+            <Stack.Screen name="Categories" component={Categories} />
+            <Stack.Screen name="Notifications" component={Notifications} />
+            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="ProductDetail" component={ProductDetail} />
+            <Stack.Screen name="Search" component={Search} />
+            <Stack.Screen name="SellerProfile" component={SellerProfile} />
+            <Stack.Screen name="MyListings" component={MyListings} />
+            <Stack.Screen name="Favorites" component={Favorites} />
+            <Stack.Screen name="Reviews" component={Reviews} />
+            <Stack.Screen name="PrivacySecurity" component={PrivacySecurity} />
+            <Stack.Screen name="Location" component={Location} />
+            <Stack.Screen name="CategoryProducts" component={CategoryProducts} />
+            <Stack.Screen name="Saved" component={Saved} />
+            <Stack.Screen name="ShareSheet" component={ShareSheet} />
+            <Stack.Screen name="ReelComments" component={ReelComments} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;
